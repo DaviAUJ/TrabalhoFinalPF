@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --dimensao: ;
+}
+
+body, main {
+    background-color: #03031b;
+
+    height: 100vh;
+}
+
+section {
+    display: grid;
+
+    grid-template-columns: repeat(var(--dimensao), 1fr);
+    gap: calc(-0.1px * var(--dimensao) + 5px);
+
+    width: 90vh;
+    height: 90vh;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+section > div {
+    background-color: #35354d;
+}
+
+section > div:hover {
+    background-color: #272736;
+
+    transition: background-color 100ms linear;
+}
+
+section > div:active {
+    background-color: #1d1d29;
+
+    transition: background-color 50ms linear;
+}
