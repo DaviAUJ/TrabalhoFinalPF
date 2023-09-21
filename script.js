@@ -9,7 +9,7 @@ const carregar = (elementoHTML) => (dimensao) => (cont=0) => {
     if(cont == dimensao ** 2) { return }
 
     //Define o elemento com ID baseado na coordenada
-    const novoElem = criarElemComID("div")(`${divisaoInteira(cont)(10)} ${(cont) % 10}`)
+    const novoElem = criarElemComID("div")(`${divisaoInteira(cont)(dimensao)} ${(cont) % dimensao}`)
 
     // Insere o novo elemento dentro do elemento passado como parametro
     elementoHTML.appendChild(novoElem)
