@@ -17,13 +17,21 @@ const carregar = (elementoHTML) => (dimensao) => (cont=0) => {
     carregar(elementoHTML)(dimensao)(cont + 1)
 }
 
-// Reutilização de carregar
+// Reutilização de carregar 
 const carregarCampo = carregar(document.getElementById("campo"))
 
-// Dificudades: fácil - 10, médio - 20, dificil - 30
-const dimensao = 30
 
+//
 // Para mudar o arquivo CSS não adianta tem que furar o paradigma
-document.documentElement.style.setProperty("--dimensao", dimensao)
+const escolherdificuldade = (id) => {
+    const style =  document.documentElement.style
+    if (id == "facil")  {carregarCampo(10)() 
+        style.setProperty("--dimensao", 10)}
+    else if (id == "intermediario") {carregarCampo(20)() 
+        style.setProperty("--dimensao", 20)}
+    else if (id == "dificil") {carregarCampo(30)() 
+        style.setProperty("--dimensao", 30)}
+    document.getElementById("menu").style.visibility ="hidden"
+    document.getElementById("campo").style.visibility="visible"
+}
 
-carregarCampo(dimensao)()

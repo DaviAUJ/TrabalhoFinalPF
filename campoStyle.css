@@ -15,7 +15,21 @@ body, main {
     height: 100vh;
 }
 
-section {
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    color: aliceblue;
+}
+
+p {
+    text-align: center;
+    margin-top: 100px;
+    color: aliceblue
+}
+#botoes {
+    text-align: center;
+}
+#campo {
     display: grid;
 
     grid-template-columns: repeat(var(--dimensao), 1fr);
@@ -28,19 +42,20 @@ section {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    visibility: hidden;
 }
 
-section > div {
+#campo > div {
     background-color: #35354d;
 }
 
-section > div:hover {
+#campo > div:hover {
     background-color: #272736;
 
     transition: background-color 100ms linear;
 }
 
-section > div:active {
+#campo > div:active {
     background-color: #1d1d29;
 
     transition: background-color 50ms linear;
