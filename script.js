@@ -1,3 +1,6 @@
+// Gera um número aleatório entre min e max, btw essa func não é pura
+const randint = (min) => (max) => Math.floor(Math.random() * (max - min + 1) + min)
+
 const divisaoInteira = (dividendo) => (divisor) => Math.floor(dividendo / divisor)
 
 // Cria elemento com já uma ID, este foi o melhor jeito de fazer que achei de fazer os dois ao mesmo tempo sem furar o paradigma
@@ -17,11 +20,43 @@ const carregar = (elementoHTML) => (dimensao) => (cont=0) => {
     carregar(elementoHTML)(dimensao)(cont + 1)
 }
 
+// TODO = a fazer
+// TODO: uma forma de fazer essa função ser pura pq nn consegui fazer usando sistema de seed, ent o jeito é usar randint()
+// TODO: também tentar fazer uma forma de fazer com o tanto de bombas sejam uniformes pq do jeito q tá fica variando, 10 - 20%, 20 - 25%, 30 - 30%
+//       se o cara der azar pode até pegar um campo inteiro
+// TODO: Fazer uma forma de o quadrado que o jogador clicar seja livre de bombas e que seus quadrados vizinhos tbm não tenham
+// TODO: tentar fazer uma forma de que bombas nunca façam um anel, onde a quadrado do meio fique isolado
+//       Esse nn tem tanta urgencia pq no original isso podia acontecer
+
+// Função usada para gerar uma matriz que representa o campo no código, 1 para bombas, 0 para espaços vazia, vou dormir agora boa noite
+const criarMatrizDoCampo = (dimensao) => (percentual) => (cont=1) => {
+    const gerarLinha = (tamanho) => (percentual) => (cont=1) => {
+        if(cont == tamanho) {
+            if(randint(1)(100) > percentual) {
+                return [ 0 ]
+            }
+
+            return [ 1 ]
+        }
+
+        if(randint(1)(100) > percentual) {
+            return [ 0, ...gerarLinha(tamanho)(percentual)(cont + 1) ]
+        }
+
+        return [ 1, ...gerarLinha(tamanho)(percentual)(cont + 1) ]
+    }
+
+    if(dimensao == cont) { return [ gerarLinha(dimensao)(percentual)() ] }
+
+    return [ gerarLinha(dimensao)(percentual)(), ...criarMatrizDoCampo(dimensao)(percentual)(cont + 1)]
+}
+
+console.log(criarMatrizDoCampo(10)(20)())
+
 // Reutilização de carregar 
 const carregarCampo = carregar(document.getElementById("campo"))
 
-
-//
+// Função usada nos botões de dificuldade para escolher a dificuldade
 // Para mudar o arquivo CSS não adianta tem que furar o paradigma
 const escolherdificuldade = (id) => {
     const style =  document.documentElement.style

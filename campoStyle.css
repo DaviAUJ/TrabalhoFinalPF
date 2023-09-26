@@ -1,44 +1,66 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
 * {
     margin: 0;
     padding: 0;
+
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
+    color: #7b7bac;
 }
 
 :root {
     --dimensao: ;
 }
 
-body, main {
+body {
     background-color: #03031b;
-
-    height: 100vh;
 }
 
 h1 {
     text-align: center;
     margin-top: 100px;
-    color: aliceblue;
-    font-size: 60px;
-    font-family: Cambria, serif;
+
+    font-weight: 900;
+
+    font-size: 7rem;
 }
 
 p {
     text-align: center;
-    margin-top: 200px;
-    color: aliceblue;
-    font-size: 40px
+    margin: 200px 0px 100px;
+
+    font-size: 3.25rem;
 }
+
 #botoes {
     text-align: center;
 }
-#botoes button {
-    width:200px;
-    height: 50px;
-    font-size: 25px;
-    margin-right: 5px;
-    margin-left: 5px;
-    margin-top: 10px;
+
+#botoes > button {
+    width: 15%;
+    height: 100px;
+
+    font-size: 2rem;
+
+    margin: 40px 40px;
+    
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #7b7bac;
+
+    background-color: #03031b;
+}
+
+#botoes > button:hover {
+    background-color: #040416
+}
+
+#botoes > button:active {
+    background-color: #090913;
+    transform: scale(98%, 98%);
+
+    transition: 50ms linear;
 }
 
 #campo {
@@ -68,7 +90,8 @@ p {
 }
 
 #campo > div:active {
-    background-color: #1d1d29;
+    background-color: #7b7bac;
+    transform: scale(95%, 95%);
 
-    transition: background-color 50ms linear;
+    transition: 50ms linear;
 }
