@@ -6,19 +6,60 @@ const divisaoInteira = (dividendo) => (divisor) => Math.floor(dividendo / diviso
 // Cria elemento com já uma ID, este foi o melhor jeito de fazer que achei de fazer os dois ao mesmo tempo sem furar o paradigma
 const criarElemComID = (tipo) => (id) => Object.assign(document.createElement("div"), {id: id})
 
+
+
+const mostrarNumero = (elemento) => (matriz) => {
+    const verificar = (id) => (matriz) =>(contbomba=0)=>(contagem=0) => {
+        const idarray = id.split(" ")
+        //console.log(idarray)
+        const ordem = [
+            [0,1],
+            [1,1],
+            [1,0],
+            [1,-1],
+            [0,-1],
+            [-1,-1],
+            [-1,0],
+            [-1,1]
+        ]
+        if(contagem==7)   {
+            try{
+                const tembomba = matriz[idarray[0]+ordem[contagem][0]][idarray[1]+ordem[contagem][1]] 
+                return contbomba+tembomba
+            }finally{
+            return contbomba
+            }
+        }
+    
+        try{
+            const tembomba = matriz[idarray[0]+ordem[contagem][0]][idarray[1]+ordem[contagem][1]]
+            console.log(tembomba)
+            verificar(id)(matriz)(contbomba+tembomba)(contagem+1)
+            
+        }finally{
+            verificar(id)(matriz)(contbomba)(contagem+1)
+        }
+    }
+elemento.innerHTML = verificar(elemento.id)(matriz)()()
+}
+
 // Essa função é usada para carregar os N quadrados para formar a grade do campo minado
 // para não ter que escrever N DIVs no código HTML
 const carregar = (elementoHTML) => (dimensao) => (cont=0) => {
     if(cont == dimensao ** 2) { return }
 
+
+    
     //Define o elemento com ID baseado na coordenada
     const novoElem = criarElemComID("div")(`${divisaoInteira(cont)(dimensao)} ${(cont) % dimensao}`)
 
     // Insere o novo elemento dentro do elemento passado como parametro
+    novoElem.addEventListener("click",mostrarNumero(novoElem)(teste))
     elementoHTML.appendChild(novoElem)
 
     carregar(elementoHTML)(dimensao)(cont + 1)
 }
+
 
 // TODO = a fazer
 // TODO: uma forma de fazer essa função ser pura pq nn consegui fazer usando sistema de seed, ent o jeito é usar randint()
@@ -35,23 +76,23 @@ const criarMatrizDoCampo = (dimensao) => (percentual) => (cont=1) => {
             if(randint(1)(100) > percentual) {
                 return [ 0 ]
             }
-
+            
             return [ 1 ]
         }
-
+        
         if(randint(1)(100) > percentual) {
             return [ 0, ...gerarLinha(tamanho)(percentual)(cont + 1) ]
         }
-
+        
         return [ 1, ...gerarLinha(tamanho)(percentual)(cont + 1) ]
     }
-
+    
     if(dimensao == cont) { return [ gerarLinha(dimensao)(percentual)() ] }
-
+    
     return [ gerarLinha(dimensao)(percentual)(), ...criarMatrizDoCampo(dimensao)(percentual)(cont + 1)]
 }
 
-console.log(criarMatrizDoCampo(10)(20)())
+
 
 // Reutilização de carregar 
 const carregarCampo = carregar(document.getElementById("campo"))
@@ -70,3 +111,5 @@ const escolherdificuldade = (id) => {
     document.getElementById("campo").style.visibility="visible"
 }
 
+
+const teste = criarMatrizDoCampo(10)(20)()
