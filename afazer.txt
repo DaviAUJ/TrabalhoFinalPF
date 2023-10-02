@@ -1,0 +1,20 @@
+// fazer uma forma de fazer com o tanto de bombas sejam uniformes pq do jeito q tá fica variando
+   é possível q uma pessoa muito azarada pegue o campo todo sem bomba ou todo com bomba
+
+// Fazer uma área de isenção de bombas onde o caba q ta jogando clicar
+
+// Fazer a UI do jogo com o tempo e a quantidade de bandeiras
+
+// Embelezar o campo pq ainda tá bem cru
+
+// Fazer as páginas que vão aparecer dps que o jogador clicar em uma das opções do menu inicial
+
+// Fazer com que elas tbm tenha um efeito de hover
+
+// Tirar título CAMPO MINADO da parte de selecionar a dificuldade
+
+// Organizar o código em módulos
+
+// e tentar corrigir as partes que não estão 100% funcional(se nn der é ok, só deixar o menos possível)
+
+// Hospedar o site pra ter aquele ponto extra dos crias
