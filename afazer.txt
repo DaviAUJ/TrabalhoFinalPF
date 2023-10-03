@@ -1,5 +1,3 @@
-// fazer uma forma de fazer com o tanto de bombas sejam uniformes pq do jeito q tá fica variando
-   é possível q uma pessoa muito azarada pegue o campo todo sem bomba ou todo com bomba
 
 // Fazer uma área de isenção de bombas onde o caba q ta jogando clicar
 

@@ -7,28 +7,51 @@ const divisaoInteira = (dividendo) => (divisor) => Math.floor(dividendo / diviso
 // Cria elemento com já uma ID, este foi o melhor jeito de fazer que achei de fazer os dois ao mesmo tempo sem furar o paradigma
 const criarElemComID = (tipo) => (id) => Object.assign(document.createElement(tipo), {id: id})
 
+
+const editarmatriz = (matriz)=>(coodx)=>(coody)=>(novoelem)=>{
+    return matriz.map(
+        (elem,index)=>{
+            if(index==coody){
+                return elem.map(
+                    (elem2,index2)=>{
+                        if(index2 == coodx){
+                            return novoelem
+                        }else {return elem2}
+                    }
+                )
+            }else {return elem}
+        }
+    )
+}
+
 // Cria a matriz do campo, que é a representação dele no código usando 1 para bombas e 0 para espaços vazios
 // Não consegui fazer de um jeito funcional usando sistema de seed
-const criarMatrizDoCampo = (dimensao) => (percentual) => (cont=1) => {
-    const gerarLinha = (tamanho) => (percentual) => (cont=1) => {
-        if(cont == tamanho) {
-            if(randint(1)(100) > percentual) {
-                return [ 0 ]
-            }
-            
-            return [ 1 ]
+const criarMatrizDoCampo = (dimensao) => (cont=1) => {
+    const gerarLinha = (tamanho) => (cont=1) => {
+        if(cont == tamanho) {  
+            return [ 0 ]
         }
         
-        if(randint(1)(100) > percentual) {
-            return [ 0, ...gerarLinha(tamanho)(percentual)(cont + 1) ]
-        }
-        
-        return [ 1, ...gerarLinha(tamanho)(percentual)(cont + 1) ]
+        return [ 0, ...gerarLinha(tamanho)(cont + 1) ]
     }
     
-    if(dimensao == cont) { return [ gerarLinha(dimensao)(percentual)() ] }
+    if(dimensao == cont) { return [ gerarLinha(dimensao)() ] }
     
-    return [ gerarLinha(dimensao)(percentual)(), ...criarMatrizDoCampo(dimensao)(percentual)(cont + 1)]
+    return [ gerarLinha(dimensao)(), ...criarMatrizDoCampo(dimensao)(cont + 1)]
+}
+
+
+const colocarbombas = (matriz) =>(nbombas)=>(contagem=1)=>{
+    const x = randint(0)(matriz.length-1)
+    const y = randint(0)(matriz.length-1)
+    if(nbombas==contagem) {
+        if(matriz[y][x]==0){return editarmatriz(matriz)(x)(y)(1)}
+
+        else if (matriz[y][x]==1){return colocarbombas(matriz)(nbombas)(contagem)}
+    }
+    if(matriz[y][x]==0){return colocarbombas(editarmatriz(matriz)(x)(y)(1))(nbombas)(contagem+1)}
+    else if (matriz[y][x]==1){return colocarbombas(matriz)(nbombas)(contagem)}
+
 }
 
 // Essa função basicamente se resume ao clique, ele verifica quantas bombas tem ao redor, dps 
@@ -167,7 +190,5 @@ const escolherdificuldade = (id) => {
     document.getElementById("campo").style.visibility="visible"
 }
 
-const teste = criarMatrizDoCampo(10)(12)()
-
+const teste = colocarbombas(criarMatrizDoCampo(10)())(10)()
 console.log(teste)
-
