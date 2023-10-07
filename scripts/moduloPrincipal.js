@@ -45,7 +45,7 @@ export const mostrarNumero = (elemento) => (matriz) => (cont=0) => {
                 return tembomba
 
             }catch(err){
-                return 0
+                return 0 
 
             }
         }
@@ -70,6 +70,7 @@ export const mostrarNumero = (elemento) => (matriz) => (cont=0) => {
                                                  // se o quadrado já foi verificado criando um loop infinito
 
     // Caso seja a casa tenha zero bombas ao redor a função vai se replicar nos quadrados proximos até encontrar um quadrado com 
+    
     // mais de uma bomba proxima
     if(bombasAdj == 0) {
         elemento.style.backgroundColor = "#FFFFFF"
@@ -113,7 +114,6 @@ export const mostrarNumero = (elemento) => (matriz) => (cont=0) => {
 }
 
 
-
 // Não consegui fazer de um jeito funcional usando sistema de seed
 // funcao que server pra posicionar as bombas em locais aleatorios
 export const colocarbombas = (matriz) =>(nbombas)=>(contagem=1)=>{
@@ -129,3 +129,8 @@ export const colocarbombas = (matriz) =>(nbombas)=>(contagem=1)=>{
     else {return colocarbombas(matriz)(nbombas)(contagem)}
 
 }
+
+
+
+
+
