@@ -1,13 +1,21 @@
 // script principal
-import { divisaoInteira, criarElemComID, quantosFilhosComAClasse, editarmatriz } from "./moduloAuxiliar.js"
-import { criarMatrizDoCampo, colocarbombas, mostrarNumero } from "./moduloPrincipal.js"
+import { divisaoInteira, criarElemComID, quantosFilhosComAClasse, editarmatriz, compararLista } from "./moduloAuxiliar.js"
+import { criarMatrizDoCampo, colocarbombas, mostrarNumero, atualizarNumeroDeBandeiras, gameOver, win } from "./moduloPrincipal.js"
+
+// Variáveis importantes para o jogo
+// Acreditamos que essas aqui não sejam possíveis serem aplicadas funcionalmente
+let densidadeDeBombas
+let contador
+let matrizPrincipal 
+let matrizBandeiras // funciona como a matrizPrincipal só que para bandeiras
 
 // funcao geral para quando o jogador clicar em quadrado qualquer
 // ela e usada tambem para identificar o primeiro quadrado clicado e depois criar o campo
-export const clicar = (elem) => () => {
+export const cliqueEsquerdo = (elem) => () => {
     const campo = document.getElementById("campo")
-    const coordx = parseInt(elem.id[0])
-    const coordy = parseInt(elem.id[2])
+    const coordx = parseInt(elem.id.split(' ')[0]) // Formatação da coordenada x
+    const coordy = parseInt(elem.id.split(' ')[1]) // Formatação da coordenada y
+    const textoDiv = elem.firstChild
 
     // faz uma verificacao para saber se esse clique foi o primeiro
     // a area de isencao é identificado como um 2
@@ -17,20 +25,58 @@ export const clicar = (elem) => () => {
         matrizPrincipal = editarmatriz(matrizPrincipal)(coordx)(coordy)('0')
         
         // depois do primeiro clique ai sim coloca as bombas de acordo com a dificuldade
-        if(matrizPrincipal.length == 10) { matrizPrincipal = colocarbombas(matrizPrincipal)((matrizPrincipal.length ** 2) * 0.15)() }
-        else if(matrizPrincipal.length == 20) { matrizPrincipal = colocarbombas(matrizPrincipal)((matrizPrincipal.length ** 2) * 0.20)() }
-        else if(matrizPrincipal.length == 30) { matrizPrincipal = colocarbombas(matrizPrincipal)((matrizPrincipal.length ** 2) * 0.25)() }
+        matrizPrincipal = colocarbombas(matrizPrincipal)(densidadeDeBombas)()
 
         matrizPrincipal = editarmatriz(matrizPrincipal)(coordx)(coordy)(0) // dps volta com o zero numero para nao quebrar os calculos das outras funcoes
     }
-    
+
     console.log(matrizPrincipal)
-    mostrarNumero(elem)(matrizPrincipal)() 
+    
+    // Impede que o jogador clique em uma celula com bandeira
+    if(textoDiv.innerHTML !== '🚩') {
+        mostrarNumero(elem)(matrizPrincipal)() 
+    }
+
+    // Verifica se a celula clicada é uma bomba
+    if(matrizPrincipal[coordy][coordx] === 1) {
+        gameOver(matrizPrincipal) // Função da derrota
+    }
 }
 
+// Função usada para definir as ações do botão direito
+export const cliqueDireito = (elem) => {
+    const coordx = parseInt(elem.id.split(' ')[0]) // Formatação da coordenada x
+    const coordy = parseInt(elem.id.split(' ')[1]) // Formatação da coordenada y
+    const textoDiv = elem.firstChild
 
+    if(textoDiv.innerHTML == '' && contador > 0) {
+        textoDiv.innerHTML = "🚩"
 
+        // Salvar posição na matriz de bandeiras
+        matrizBandeiras = editarmatriz(matrizBandeiras)(coordx)(coordy)(1)
 
+        // Decrementa do contador
+        contador--
+
+    } else if(textoDiv.innerHTML == '🚩') {
+        textoDiv.innerHTML = ''
+
+        // Tirar posição na matriz de bandeiras
+        matrizBandeiras = editarmatriz(matrizBandeiras)(coordx)(coordy)(0)
+
+        // Adicione de volta ao contador
+        contador++
+    }
+
+    console.log(matrizBandeiras)
+
+    //atualize a exibição do contador
+    atualizarNumeroDeBandeiras(contador)
+    
+    if(compararLista(matrizBandeiras)(matrizPrincipal)) {
+        win(matrizPrincipal) // Função da vitória
+    }
+}
 
 // Essa função é usada para carregar os N quadrados para formar a grade do campo minado
 // para não ter que escrever N DIVs no código HTML
@@ -40,122 +86,73 @@ const carregar = (elementoHTML) => (dimensao) => (cont=0) => {
     //Define o elemento com ID baseado na coordenada
     const novoElem = criarElemComID("div")(`${(cont) % dimensao} ${divisaoInteira(cont)(dimensao)}`)
 
-    // Insere o novo elemento dentro do elemento passado como parametro
+    // Lugar onde o texto vai ficar armazenado
+    novoElem.appendChild(criarElemComID("span")("textoCentro"))
 
-    novoElem.addEventListener("click", clicar(novoElem))
-    elementoHTML.appendChild(novoElem)
+    // Event Listener do botão esquerdo
+    novoElem.addEventListener("click", cliqueEsquerdo(novoElem))
     
-    //contador
-    const contadorElemento = document.getElementById("contador");
- let contador = numeroDeBandeiras;
-   
-   //atualizar a exibição do contador
-function atualizarContador() {
-    contadorElemento.textContent = contador;
-}
-//ouvinte de evento para o clique com o botão direito do mouse
-document.addEventListener("contextmenu", function (event) {
-    event.preventDefault();
-
-  //contador ainda é maior que zero?
-    if (contador > 0) {
-        //decremente o contador
-        contador--;
-
-        //atualize a exibição do contador
-        atualizarContador();
-    }
-});
-
-// chama a função para inicializar a exibição do contador
-atualizarContador();
-
-
+    //ouvinte de evento para o clique com o botão direito do mouse
+    novoElem.addEventListener("contextmenu", function nnsei(event) {
+        event.preventDefault()
+        cliqueDireito(novoElem)
+    });
+    
+    elementoHTML.appendChild(novoElem)
     carregar(elementoHTML)(dimensao)(cont + 1)
 }
-
-
 
 // Reutilização de carregar 
 const carregarCampo = carregar(document.getElementById("campo"))
 
-
 // Função usada nos botões de dificuldade para escolher a dificuldade
 // Para mudar o arquivo CSS não adianta tem que furar o paradigma
-
-let densidadeDeBombas; 
-
 const escolherdificuldade = (id) => {
     const style = document.documentElement.style
 
-
+    // Ajusta o jogo conforme a dificuldade escolhida
     if (id == "facil")  {
-        carregarCampo(10)() 
         style.setProperty("--dimensao", 10)
-        densidadeDeBombas = 15;
-        numeroDeBandeiras = densidadeDeBombas; 
-        atualizarNumeroDeBandeiras()
 
+        matrizPrincipal = criarMatrizDoCampo(10)()
+        matrizBandeiras = criarMatrizDoCampo(10)()
+        densidadeDeBombas = 15
+
+        carregarCampo(10)() 
+        
     } else if (id == "intermediario") {
-        carregarCampo(20)() 
         style.setProperty("--dimensao", 20)
-        densidadeDeBombas = 80;
-        numeroDeBandeiras = densidadeDeBombas; 
-        atualizarNumeroDeBandeiras()
+
+        matrizPrincipal = criarMatrizDoCampo(20)()
+        matrizBandeiras = criarMatrizDoCampo(20)()
+        densidadeDeBombas = 60
+
+        carregarCampo(20)() 
 
     } else if (id == "dificil") {
-        carregarCampo(30)() 
         style.setProperty("--dimensao", 30)
-        densidadeDeBombas = 225;
-        numeroDeBandeiras = densidadeDeBombas;
-        atualizarNumeroDeBandeiras()  
+
+        matrizPrincipal = criarMatrizDoCampo(30)()
+        matrizBandeiras = criarMatrizDoCampo(30)()
+        densidadeDeBombas = 160
+
+        carregarCampo(30)() 
 
     }
 
+    // Começa com a quantidade de bandeiras igual ao tanto de bombas
+    contador = densidadeDeBombas
+    
+    atualizarNumeroDeBandeiras(contador) // Inicialização do contador
+
+    // Serve para trocar a tela de dificuldade pela tela do jogo
     document.getElementById("menu").style.visibility ="hidden"
     document.getElementById("campo").style.visibility="visible"
-    const botaoDific = document.getElementById("btnDific");
-    botaoDific.style.visibility="visible"
-    const timer = document.getElementById("timer");
-    timer.style.visibility="visible"
-    const bandeiras = document.getElementById("bandeiraF")
-    bandeiras.style.visibility="visible"
 
+    document.getElementById("btnDific").style.visibility="visible"
+    document.getElementById("timer").style.visibility="visible"
+    document.getElementById("bandeiraF").style.visibility="visible"
 }
 
-let numeroDeBandeiras = densidadeDeBombas;  // por algum motivo, o contador não reconhece essa variavel como um número, se vc botar um número aleatorio aqui em vez de densidadeDeBombas ele reconhece 
-function atualizarNumeroDeBandeiras() {
-    const elementoBandeiras = document.getElementById("bandeiraF");
-    elementoBandeiras.textContent = `🚩: ${numeroDeBandeiras}`;
-  }
-
-
-
-  
-window.escolherdificuldade = escolherdificuldade // precisa ser feito isso para onclick no html funcionar
-
-// a gente nao acho uma forma de criar uma area de isencao sem quebrar o paradigma
-// e para isso e preciso declarar essa variavel
-let matrizPrincipal = criarMatrizDoCampo(10)()
-
-//timer: infelizmente não é possivel fazer de forma funcional. utilizei o setInterval()
-
-
-
-var timer;
-var ele = document.getElementById('timer');
-
-(function () {
-  var sec = 0;
-  timer = setInterval(() => {
-    var minutos = Math.floor(sec / 60); // calcula os minutos
-    var segundos = sec % 60; // calcula os segundos
-
-    // formatação para exibir minutos e segundos com dois dígitos cada
-    var tempoFormat = String(minutos).padStart(2, '0') + ':' + String(segundos).padStart(2, '0');
-    ele.innerHTML = tempoFormat;
-
-    sec++;
-  }, 1000); 
-})();
-
+// precisa ser feito isso para a função escolherdificuldade funcionar no onclick
+window.escolherdificuldade = escolherdificuldade 

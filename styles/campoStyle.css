@@ -81,6 +81,20 @@ p {
 
 #campo > div {
     background-color: #35354d;
+
+    position: relative;
+}
+
+#campo > div > span {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: calc(-1.2px * var(--dimensao) + 50px);;
+
+    font-weight: 900;
 }
 
 #campo > div:hover {
@@ -141,9 +155,9 @@ border: 2px solid white
     border-style: solid;
     border-color: #7b7bac;
     background-color: #03031b;
-    color: red;
-visibility: hidden;
-position: absolute; 
+    color: #7b7bad;
+    visibility: hidden;
+    position: absolute; 
     top: 10%; 
     left: 90%; 
     transform: translate(-50%, -50%);
@@ -162,8 +176,8 @@ position: absolute;
     border-style: solid;
     border-color:  #7b7bad;
     background-color: #03031b;
-color: red;
-visibility: hidden;
+    color: #7b7bad;
+    visibility: hidden;
 }
 
 #contador-container {

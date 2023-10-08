@@ -43,3 +43,27 @@ export const divisaoInteira = (dividendo) => (divisor) => Math.floor(dividendo /
 
 // Cria elemento com já uma ID, este foi o melhor jeito de fazer que achei de fazer os dois ao mesmo tempo sem furar o paradigma
 export const criarElemComID = (tipo) => (id) => Object.assign(document.createElement(tipo), {id: id})
+
+
+
+//timer: infelizmente não é possivel fazer de forma funcional. utilizei o setInterval()
+var timer;
+var ele = document.getElementById('timer');
+
+(function () {
+  var sec = 0
+  timer = setInterval(() => {
+    var minutos = Math.floor(sec / 60) // calcula os minutos
+    var segundos = sec % 60 // calcula os segundos
+
+    // formatação para exibir minutos e segundos com dois dígitos cada
+    var tempoFormat = String(minutos).padStart(2, '0') + ':' + String(segundos).padStart(2, '0')
+    ele.innerHTML = tempoFormat
+
+    sec++
+  }, 1000)
+})();
+
+
+
+export const compararLista = (lista1) => (lista2) => JSON.stringify(lista1) === JSON.stringify(lista2)
