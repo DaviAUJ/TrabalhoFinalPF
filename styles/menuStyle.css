@@ -49,11 +49,9 @@ padding-block: 16px;
 }
 
 .hero {
-    height: 100vh;
+    height: calc(100vh - 70px);
     background-color: #03031b;
 }
-
-
 
 h2 {
     margin: 0 auto;
