@@ -6,12 +6,6 @@
 
 // Hospedar o site pra ter aquele ponto extra dos crias
 
-// parar o contador nas funções de ganhar e perder
-
 // Modo customizado (se der)
 
 // botar um easter egg (se der)
-
-// Mexer nas cores do quadrados para mais fácil vizualição(tipo tirar aquele branco e escurecer casas ja clicadsaassa)
-
-// e fazer a fdunção de botar cor nos numeros dependo do valor ( se der )

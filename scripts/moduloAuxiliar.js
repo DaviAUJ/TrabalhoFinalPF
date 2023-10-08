@@ -47,23 +47,25 @@ export const criarElemComID = (tipo) => (id) => Object.assign(document.createEle
 
 
 //timer: infelizmente não é possivel fazer de forma funcional. utilizei o setInterval()
-var timer;
-var ele = document.getElementById('timer');
+export var timer;
 
-(function () {
-  var sec = 0
-  timer = setInterval(() => {
-    var minutos = Math.floor(sec / 60) // calcula os minutos
-    var segundos = sec % 60 // calcula os segundos
+export function iniciarTimer() {
+    var ele = document.getElementById('timer');
 
-    // formatação para exibir minutos e segundos com dois dígitos cada
-    var tempoFormat = String(minutos).padStart(2, '0') + ':' + String(segundos).padStart(2, '0')
-    ele.innerHTML = tempoFormat
+    var sec = 1
+    timer = setInterval(() => {
+        var minutos = Math.floor(sec / 60) // calcula os minutos
+        var segundos = sec % 60 // calcula os segundos
 
-    sec++
-  }, 1000)
-})();
+        // formatação para exibir minutos e segundos com dois dígitos cada
+        var tempoFormat = String(minutos).padStart(2, '0') + ':' + String(segundos).padStart(2, '0')
+        ele.innerHTML = tempoFormat
+
+        sec++
+    }, 1000)
+};
 
 
 
+// Usar lista1 === lista2 não da o resultado, aí tem que usar esse meio gambiarrento de transformar a matriz no formato string de JSON
 export const compararLista = (lista1) => (lista2) => JSON.stringify(lista1) === JSON.stringify(lista2)

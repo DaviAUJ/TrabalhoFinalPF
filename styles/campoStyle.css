@@ -83,6 +83,8 @@ p {
     background-color: #35354d;
 
     position: relative;
+
+    transition: all 150ms;
 }
 
 #campo > div > span {
@@ -95,6 +97,8 @@ p {
     font-size: calc(-1.2px * var(--dimensao) + 50px);;
 
     font-weight: 900;
+
+    user-select: none;
 }
 
 #campo > div:hover {

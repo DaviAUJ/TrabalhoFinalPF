@@ -1,5 +1,5 @@
 // funcoes importates para o jogo
-import { editarmatriz, randint } from "./moduloAuxiliar.js"
+import { editarmatriz, randint, timer } from "./moduloAuxiliar.js"
 
 // Cria a matriz do campo, que é a representação dele no código usando 1 para bombas e 0 para espaços vazios
 export const criarMatrizDoCampo = (dimensao) => (cont=1) => {
@@ -40,6 +40,7 @@ export const mostrarNumero = (elemento) => (matriz) => (cont=0) => {
 
         // Para acessar a matriz a ordem das coordenadas é (Y, X)
 
+        // try catch usado para saber se o jogador clicou em alguma aresta/canto
         if(contagem==7)   {
             try{
                 const tembomba = matriz[coordy + ordem[contagem][1]][coordx + ordem[contagem][0]]
@@ -69,15 +70,15 @@ export const mostrarNumero = (elemento) => (matriz) => (cont=0) => {
     
     const bombasAdj = verificar(elemento.id)(matriz)()
 
+    elemento.style.backgroundColor = "#25253a"
     elemento.firstChild.innerHTML = bombasAdj
-    elemento.setAttribute("class", "verificado") // classe necessaria, se ela não existe nn teria como saber 
-                                                 // se o quadrado já foi verificado criando um loop infinito
-
+    elemento.setAttribute("class", "verificado") // classe necessaria, se ela não existe nn teria como saber se o quadrado já foi verificado criando um loop infinito
+    colorirNumero(elemento)
+    
     // Caso seja a casa tenha zero bombas ao redor a função vai se replicar nos quadrados proximos até encontrar um quadrado com 
     
     // mais de uma bomba proxima
     if(bombasAdj == 0) {
-        elemento.style.backgroundColor = "#FFFFFF"
         elemento.firstChild.innerHTML = ''
 
         const coordx = parseInt(elemento.id.split(' ')[0]) // Formatação da coordenada x
@@ -95,6 +96,7 @@ export const mostrarNumero = (elemento) => (matriz) => (cont=0) => {
             [-1,1]
         ]
     
+        // try catch usado para saber se o jogador clicou em alguma aresta/canto
         if(cont == 7) {
             try {
                 // Pega o quadrado adjacente da vez
@@ -127,7 +129,7 @@ export const mostrarNumero = (elemento) => (matriz) => (cont=0) => {
 
 // Não consegui fazer de um jeito funcional usando sistema de seed
 // funcao que server pra posicionar as bombas em locais aleatorios
-export const colocarbombas = (matriz) =>(nbombas)=>(contagem=1)=>{
+export const colocarbombas = (matriz) => (nbombas) => (contagem=1) => {
     const x = randint(0)(matriz.length-1)
     const y = randint(0)(matriz.length-1)
 
@@ -146,11 +148,12 @@ export const colocarbombas = (matriz) =>(nbombas)=>(contagem=1)=>{
 //atualizar a exibição do contador
 export function atualizarNumeroDeBandeiras(num) {
     const elementoBandeiras = document.getElementById("bandeiraF")
-    elementoBandeiras.textContent = `🚩: ${num}`
+    elementoBandeiras.textContent = `🚩 ${num}`
 }
 
 
 
+// Função para determinar o fim de jogo, quando o jogador perde
 export const gameOver = (matriz) => {
     const campo = document.getElementById("campo")
     const filhos = campo.children
@@ -186,11 +189,14 @@ export const gameOver = (matriz) => {
         aux(xs)
     }
 
-    aux(filhos) 
+    aux(filhos)
+
+    clearInterval(timer) // Para o timer
 }
 
 
 
+// Função para determinar o fim de jogo, quando o jogador ganha
 export const win = (matriz) => {
     const campo = document.getElementById("campo")
     const filhos = campo.children
@@ -226,5 +232,80 @@ export const win = (matriz) => {
         aux(xs)
     }
 
-    aux(filhos) 
+    aux(filhos)
+
+    clearInterval(timer) // Para o timer
+}
+
+
+
+// Função para colorir os números dentro das celulas conforme seu número
+export const colorirNumero = (elem) => {
+    // Códigos hex das cores em ordem de 1-8
+    const listaCor = [
+        "1C7290",
+        "21901C",
+        "901C1C",
+        "3F51AD",
+        "90641C",
+        "1C9084",
+        "1A5921",
+        "727777"
+    ]
+
+    // Pega o texto
+    const num = parseInt(elem.firstChild.innerHTML)
+
+    if(num !== 0) {
+        // Muda a cor dele
+        elem.firstChild.style.color = `#${listaCor[num - 1]}`
+    }
+}
+
+
+
+// Cria área de isenção 3x3 onde o jogador clica pela primeira vez determinado por um 0 string
+// Eles servem apenas para a função de colocarbombas saber onde ela nn deve colocar
+export const criarAreaDeIsencao = (elem) => (matriz) => (cont=0) => {
+    const coordx = parseInt(elem.id.split(' ')[0]) // Formatação da coordenada x
+    const coordy = parseInt(elem.id.split(' ')[1]) // Formatação da coordenada y
+
+    const ordem = [
+        [0, 0],
+        [0, 1],
+        [1, 1],
+        [1, 0],
+        [1, -1],
+        [0, -1],
+        [-1, -1],
+        [-1, 0],
+        [-1, 1]
+    ]
+
+    // try catch usado para saber se o jogador clicou em alguma aresta/canto
+    try {
+        if(cont === 8) { return editarmatriz(matriz)(coordx + ordem[cont][0])(coordy + ordem[cont][1])('0') }
+    
+        return criarAreaDeIsencao(elem)(editarmatriz(matriz)(coordx + ordem[cont][0])(coordy + ordem[cont][1])('0'))(cont + 1)
+
+    } catch(err) {
+        if(cont === 8) { return matriz}
+
+        return criarAreaDeIsencao(elem)(matriz)(cont + 1)
+    }
+    
+}
+
+
+
+// Remove os zeros string para poder a lógica do resto do código funcionar
+export const removerAreaDeIsencao = (matriz) => {
+    // Percorre a matriz toda, se encontrar um '0' ele troca por um 0 número
+    return matriz.map(
+        (lista) => {
+            return lista.map(
+                (item) => item === '0' ? 0 : item
+            )
+        }
+    )
 }
