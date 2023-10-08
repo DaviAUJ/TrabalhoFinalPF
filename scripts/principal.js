@@ -88,7 +88,7 @@ const carregar = (elementoHTML) => (dimensao) => (cont=0) => {
     novoElem.addEventListener("click", cliqueEsquerdo(novoElem))
     
     //ouvinte de evento para o clique com o botão direito do mouse
-    novoElem.addEventListener("contextmenu", function nnsei(event) {
+    novoElem.addEventListener("contextmenu", function (event) {
         event.preventDefault()
         cliqueDireito(novoElem)
     });

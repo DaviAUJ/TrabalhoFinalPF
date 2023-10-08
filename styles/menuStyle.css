@@ -30,8 +30,9 @@ align-items: center;
 }
 
 .logo {
-font-size: 38px;
-margin-right: 1165px;
+    font-size: 38px;
+    margin-right: 1165px;
+    margin-left: 25px;
 }
 
 .nav-list {
@@ -48,8 +49,8 @@ padding-block: 16px;
 }
 
 .hero {
-height: calc(100vh - 70px);
-background: center / cover no-repeat #03031b
+    height: 100vh;
+    background-color: #03031b;
 }
 
 

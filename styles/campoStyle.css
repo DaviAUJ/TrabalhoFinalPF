@@ -50,6 +50,8 @@ p {
     border-color: #7b7bac;
 
     background-color: #03031b;
+
+    cursor: pointer;
 }
 
 #botoes > button:hover {
@@ -125,10 +127,10 @@ p {
     border-color: #7b7bac;
     background-color: #03031b;
     color: #7b7bac;
-    transition: all 0.6s
+    transition: all 0.1s
     ease-in-out 0s;
     position: absolute; 
-    top: 43%; 
+    top: 92%; 
     left: 90%; 
     transform: translate(-50%, -50%);
     visibility: hidden;
@@ -148,6 +150,7 @@ border: 2px solid white
 
 #mstimer {
     text-align: center;
+    user-select: none;
 }
 
 #timer {
@@ -182,6 +185,8 @@ border: 2px solid white
     background-color: #03031b;
     color: #7b7bad;
     visibility: hidden;
+
+    user-select: none;
 }
 
 #contador-container {
