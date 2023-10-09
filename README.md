@@ -5,13 +5,14 @@
  de programação funcional na Universidade Federal de Sergipe(UFS)
 
  ![image](https://github.com/DaviAUJ/TrabalhoFinalPF/blob/main/print.png)
+
 ## Como jogar
  Para jogar é bem simples apenas selecione uma das dificuldades e comece clicando em qualquer uma
  das células do campo
 
  Assim que você clicar vários números irão aparecer, eles representam a quantidade de bombas ao redor
  daquela célula. Para ganhar basta apenas colocar marcar todas as bombas com as bandeiras disponíveis,
- assim que você marcar todas corretamente você ganha o jogo. Mas se você clicar onde tem uma bomba voc
+ assim que você marcar todas corretamente você ganha o jogo. Mas se você clicar onde tem uma bomba você
  perde o jogo.
 
 ## Controles 
