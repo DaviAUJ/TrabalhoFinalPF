@@ -16,7 +16,7 @@
  perde o jogo.
 
 ## Controles 
- Botão esquerdo do mouse - revela o célula clicada
+ Botão esquerdo do mouse - revela a célula clicada
  
  Botão direito do mouse - marcar célula com uma bandeira
 
