@@ -4,6 +4,7 @@
  Este é o campo minado clássico e feito de forma funcional para o projeto final da matéria
  de programação funcional na Universidade Federal de Sergipe(UFS)
 
+ ![image]()
 ## Como jogar
  Para jogar é bem simples apenas selecione uma das dificuldades e comece clicando em qualquer uma
  das células do campo
@@ -34,9 +35,9 @@
 ## Por onde jogar:
  Este jogo pode ser jogado por meio de dois métodos:
 
- * [Site hospedado pela netlify](https://main--campominadopf.netlify.app/)
+ * [Site hospedado pela Netlify](https://main--campominadopf.netlify.app/)
 
- * [Baixando o projeto e executando o index.html](https://github.com/DaviAUJ/TrabalhoFinalPF/archive/refs/heads/main.zip)
+ * [Baixando o projeto e executando o index.html no browser](https://github.com/DaviAUJ/TrabalhoFinalPF/archive/refs/heads/main.zip)
 
 ### Para mais informação
  [Vídeo no youtube](https://www.youtube.com/watch?v=iDsQ_lNo0k0)
