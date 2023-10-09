@@ -33,8 +33,10 @@
 
 ## Por onde jogar:
  Este jogo pode ser jogado por meio de dois métodos:
-    - [Site hospedado pela netlify](https://main--campominadopf.netlify.app/)
-    - [Baixando o projeto e executando o index.html](https://github.com/DaviAUJ/TrabalhoFinalPF/archive/refs/heads/main.zip)
+
+ * [Site hospedado pela netlify](https://main--campominadopf.netlify.app/)
+
+ * [Baixando o projeto e executando o index.html](https://github.com/DaviAUJ/TrabalhoFinalPF/archive/refs/heads/main.zip)
 
 ### Para mais informação
  [Vídeo no youtube](https://www.youtube.com/watch?v=iDsQ_lNo0k0)
