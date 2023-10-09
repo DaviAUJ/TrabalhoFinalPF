@@ -6,7 +6,7 @@
 
 ## Como jogar
  Para jogar é bem simples apenas selecione uma das dificuldades e comece clicando em qualquer uma
- das celulas do campo
+ das células do campo
 
  Assim que você clicar vários números irão aparecer, eles representam a quantidade de bombas ao redor
  daquela célula. Para ganhar basta apenas colocar marcar todas as bombas com as bandeiras disponíveis,
@@ -15,6 +15,7 @@
 
 ## Controles 
  Botão esquerdo do mouse - revela o célula clicada
+ 
  Botão direito do mouse - marcar célula com uma bandeira
 
 
@@ -29,8 +30,11 @@
 
  [João Vitor Dias](https://github.com/vitordias32)
 
-link do netlify: 
-https://main--campominadopf.netlify.app/
 
-link do vídeo:
-https://www.youtube.com/watch?v=iDsQ_lNo0k0
+## Por onde jogar:
+ Este jogo pode ser jogado por meio de dois métodos:
+    - [Site hospedado pela netlify](https://main--campominadopf.netlify.app/)
+    - [Baixando o projeto e executando o index.html](https://github.com/DaviAUJ/TrabalhoFinalPF/archive/refs/heads/main.zip)
+
+### Para mais informação
+ [Vídeo no youtube](https://www.youtube.com/watch?v=iDsQ_lNo0k0)
