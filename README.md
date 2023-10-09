@@ -4,7 +4,7 @@
  Este é o campo minado clássico e feito de forma funcional para o projeto final da matéria
  de programação funcional na Universidade Federal de Sergipe(UFS)
 
- ![image]()
+ ![image](https://github.com/DaviAUJ/TrabalhoFinalPF/blob/main/print.png)
 ## Como jogar
  Para jogar é bem simples apenas selecione uma das dificuldades e comece clicando em qualquer uma
  das células do campo
